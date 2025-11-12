@@ -1,17 +1,22 @@
 import pygame as pg
 from pygame.locals import QUIT, RESIZABLE, KEYDOWN, MOUSEBUTTONDOWN, K_ESCAPE, FULLSCREEN
 
-from .class_Screen import Screen
+from ..units.class_Screen import win
 
-from .class_Player import Player
+from ..units.class_Player import Player
+from ..units.class_Enemies import Enemies
+from ..units.class_Clouds import Clouds
+from ..groups.class_AllSprites import all_sprites
+
 
 from icecream import ic
 
 
 player = Player()
 
+enemies = [Enemies() for _ in range(15)]
+clouds = [Clouds() for _ in range(15)]
 
-scr = Screen()
 
 class Game:
     def __init__(self):
@@ -21,13 +26,13 @@ class Game:
 
     def run(self):
         while self.loop:
-            scr.screen.fill('SkyBlue')
+            win.screen.fill('SkyBlue')
 
             for event in pg.event.get():
                 if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                     self.loop = False
 
-            player.update()
+            all_sprites.update()
 
 
             pg.display.update()

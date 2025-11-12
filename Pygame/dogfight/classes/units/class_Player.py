@@ -1,20 +1,26 @@
 from pygame import Surface
 from pygame.key import get_pressed
 from pygame.locals import K_w, K_a, K_s, K_d, K_UP, K_LEFT, K_DOWN, K_RIGHT
+from pygame.image import load
+from pygame.transform import scale_by
+from pygame.sprite import Sprite
 
-from .class_Screen import Screen
+from ..groups.class_AllSprites import all_sprites
 
-scr = Screen()
+from .class_Screen import win
 
-class Player:
+
+class Player(Sprite):
     def __init__(self):
-        self.image = Surface((50, 50))
-        self.image.fill('Navy')
+        Sprite.__init__(self)
+        self.image = scale_by(load('images/su-33.png').convert_alpha(), .2)
         self.rect = self.image.get_rect(center=(
-            scr.screen.get_width() // 2,
-            scr.screen.get_height() // 2
+            win.screen.get_width() // 2,
+            win.screen.get_height() // 2
         ))
-        self.speed = 10
+        self._layer = 2
+        self.speed = 5
+        all_sprites.add(self)
 
     def move(self):
         keys = get_pressed()
@@ -34,16 +40,16 @@ class Player:
         if self.rect.left <= 0:
             self.rect.left = 0
 
-        if self.rect.right >= scr.screen.get_width():
-            self.rect.right = scr.screen.get_width()
+        if self.rect.right >= win.screen.get_width():
+            self.rect.right = win.screen.get_width()
 
         if self.rect.top <= 0:
             self.rect.top = 0
 
-        if self.rect.bottom >= scr.screen.get_height():
-            self.rect.bottom = scr.screen.get_height()
+        if self.rect.bottom >= win.screen.get_height():
+            self.rect.bottom = win.screen.get_height()
 
     def update(self):
         self.move()
         self.check_position()
-        scr.screen.blit(self.image, self.rect)
+        win.screen.blit(self.image, self.rect)
