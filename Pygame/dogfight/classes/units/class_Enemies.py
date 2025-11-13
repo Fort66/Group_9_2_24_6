@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 
 from .class_Screen import win
 from ..groups.class_AllSprites import all_sprites
+from ..groups.class_SpritesGroups import groups
 
 from random import uniform, randint
 
@@ -15,6 +16,7 @@ class Enemies(Sprite):
         self.generate()
         self._layer = 2
         self.speed = randint(5, 10)
+        groups.enemies_group.add(self)
         all_sprites.add(self)
 
     def move(self):
