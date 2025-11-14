@@ -10,8 +10,9 @@ from ..groups.class_AllSprites import all_sprites
 from ..groups.class_SpritesGroups import groups
 from .class_PlayerShoots import PlayerShoots
 from .class_Explosions import Explosions
+from ..logic.class_Signals import signals
 
-from .class_Screen import win
+from ..screens.class_Screen import win
 
 from icecream import ic
 
@@ -78,6 +79,11 @@ class Player(Sprite):
             hits = list(rockets_collide.keys())[0]
             self.rocket_explosion = Explosions(hits.rect.center, 1)
             self.rocket_explosion.speed = self.speed * -1
+
+        player_collide = groupcollide(groups.player_group, groups.enemies_group, True, True)
+        if player_collide:
+            signals.change_signals('game_over')
+
 
     def update(self):
         self.move()

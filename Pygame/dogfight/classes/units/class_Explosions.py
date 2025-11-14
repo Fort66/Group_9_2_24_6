@@ -4,7 +4,7 @@ from gif_pygame import load
 from gif_pygame.transform import flip, scale_by
 from pygame.sprite import Sprite
 
-from .class_Screen import win
+from ..screens.class_Screen import win
 from ..groups.class_AllSprites import all_sprites
 
 class Explosions(Sprite):

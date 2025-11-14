@@ -2,24 +2,19 @@ from pygame.image import load
 from pygame.transform import scale_by
 from pygame.sprite import Sprite
 
-from .class_Screen import win
+from ..screens.class_Screen import win
 from ..groups.class_AllSprites import all_sprites
 
 from random import uniform, randint, choice
 
 
-clouds_list = [
-    'images/cloud2.png',
-    'images/cloud3.png',
-    'images/cloud4.png',
-    'images/cloud5.png',
-]
+
 
 
 class Clouds(Sprite):
-    def __init__(self):
+    def __init__(self, path):
         Sprite.__init__(self)
-        self.image = scale_by(load(choice(clouds_list)).convert_alpha(), .4)
+        self.image = scale_by(load(path).convert_alpha(), .4)
         self.generate()
         self._layer = 2
         self.speed = randint(1, 2)

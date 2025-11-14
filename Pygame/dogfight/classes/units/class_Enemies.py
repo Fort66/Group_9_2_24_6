@@ -2,7 +2,7 @@ from pygame.image import load
 from pygame.transform import scale_by
 from pygame.sprite import Sprite
 
-from .class_Screen import win
+from ..screens.class_Screen import win
 from ..groups.class_AllSprites import all_sprites
 from ..groups.class_SpritesGroups import groups
 

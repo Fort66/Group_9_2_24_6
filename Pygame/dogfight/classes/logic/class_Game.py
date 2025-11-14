@@ -1,21 +1,17 @@
 import pygame as pg
-from pygame.locals import QUIT, RESIZABLE, KEYDOWN, MOUSEBUTTONDOWN, K_ESCAPE, FULLSCREEN
+from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, K_F2
 
-from ..units.class_Screen import win
+from ..screens.class_Screen import win
 
-from ..units.class_Player import Player
-from ..units.class_Enemies import Enemies
-from ..units.class_Clouds import Clouds
 from ..groups.class_AllSprites import all_sprites
-
+from ..screens.class_StartScreen import start_screen
+from ..screens.class_PauseScreen import pause_screen
+from ..screens.class_GameOverScreen import game_over_screen
+from ..logic.class_Signals import signals
 
 from icecream import ic
 
 
-player = Player()
-
-enemies = [Enemies() for _ in range(15)]
-clouds = [Clouds() for _ in range(15)]
 
 
 class Game:
@@ -32,7 +28,20 @@ class Game:
                 if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                     self.loop = False
 
-            all_sprites.update()
+                if event.type == KEYDOWN and event.key == K_F2:
+                    signals.change_signals('pause')
+
+            if signals.start:
+                start_screen.update()
+
+            elif signals.pause:
+                pause_screen.update()
+
+            elif signals.game_over:
+                game_over_screen.update()
+
+            else:
+                all_sprites.update()
 
 
             pg.display.update()
